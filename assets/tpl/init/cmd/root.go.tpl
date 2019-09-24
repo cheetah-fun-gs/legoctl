@@ -3,8 +3,8 @@ package cmd
 import (
 	"sync"
 
-	"github.com/cheetah-fun-gs/goso/internal/generated/net/gnet"
-	"github.com/cheetah-fun-gs/goso/internal/generated/net/lnet"
+	"{{.ProjectName}}/internal/generated/net/gnet"
+	"{{.ProjectName}}/internal/generated/net/lnet"
 )
 
 // Execute 主函数

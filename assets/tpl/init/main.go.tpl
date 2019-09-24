@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/cheetah-fun-gs/goso/cmd"
+	"{{.ProjectName}}/goso/cmd"
 )
 
 func main() {
