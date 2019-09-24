@@ -13,6 +13,13 @@ var newCmd = &cobra.Command{
 	},
 }
 
+var (
+	newProtocols []string
+	isWithGate   bool
+)
+
 func init() {
 	rootCmd.AddCommand(newCmd)
+	newCmd.LocalFlags().StringArrayVarP(&newProtocols, "protocol", "p", []string{"http"}, "支持的协议：http、websocket、quic")
+	newCmd.LocalFlags().BoolVarP(&isWithGate, "with-gate", "g", true, "是否需要网关服务")
 }
