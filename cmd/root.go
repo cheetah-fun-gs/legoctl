@@ -23,10 +23,10 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "",
-	Short: "",
-	Long:  ``,
-	Args:  cobra.MinimumNArgs(1),
+	Use:     "goso-cli",
+	Short:   "goso项目管理工具",
+	Version: "1.0.0",
+	Args:    cobra.MinimumNArgs(1),
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
