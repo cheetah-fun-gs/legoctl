@@ -45,7 +45,6 @@ func runNew(projectPath string) error {
 	}
 
 	for _, tplFilePath := range files {
-		fmt.Println(tplFilePath)
 		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, common.TplRoot, projectPath, 1))
 		if err := render.File(data, tplFilePath, dstFilePath); err != nil {
 			return err
