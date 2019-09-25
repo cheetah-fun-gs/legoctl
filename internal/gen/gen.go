@@ -10,10 +10,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/cheetah-fun-gs/goso-cli/pkg/render"
-
+	execplus "github.com/cheetah-fun-gs/goplus/exec"
+	"github.com/cheetah-fun-gs/goplus/gostyle"
 	filepathplus "github.com/cheetah-fun-gs/goplus/path/filepath"
 	"github.com/cheetah-fun-gs/goso-cli/internal/common"
+	"github.com/cheetah-fun-gs/goso-cli/pkg/render"
 )
 
 // Gen 生产项目代码
@@ -29,6 +30,15 @@ func Gen(projectPath string) {
 	if err := render.File(handlerFileRender, tplFilePath, goFilePath); err != nil {
 		panic(err)
 	}
+
+	_, stdout, err := execplus.Command("gofmt", "-w", goFilePath)
+	if err != nil {
+		panic(err)
+	}
+	for _, line := range stdout {
+		fmt.Printf(line)
+	}
+
 	fmt.Printf("gen %s success!\n", projectPath)
 }
 
@@ -97,7 +107,7 @@ func findHandlerRender(packageName string, objs []*ast.Object) (bool, *HandlerRe
 	}
 
 	handlerRender := &HandlerRender{
-		PackageTitle: strings.ToTitle(packageName),
+		PackageTitle: gostyle.FormatToCamelCase(packageName),
 		PackageName:  packageName,
 		HandlerName:  handlerName,
 	}
