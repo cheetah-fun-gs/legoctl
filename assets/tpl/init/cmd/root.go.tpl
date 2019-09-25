@@ -3,9 +3,9 @@ package cmd
 import (
 	"sync"
 
-	"{{.ProjectName}}/internal/generated/net/gnet"
-	"{{.ProjectName}}/internal/generated/net/lnet"
-	"{{.ProjectName}}/internal/generated/net/nnet"
+	"{{.ProjectName}}/internal/net/gnet"
+	"{{.ProjectName}}/internal/net/lnet"
+	"{{.ProjectName}}/internal/net/nnet"
 )
 
 // Execute 主函数
