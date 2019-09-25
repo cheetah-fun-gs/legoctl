@@ -5,8 +5,9 @@ import (
 
 	"{{.ProjectName}}/internal/biz/handlers"
 	"{{.ProjectName}}/internal/common"
-	"{{.ProjectName}}/internal/generated/nnet"
+	"{{.ProjectName}}/internal/generated"
 	sohttp "github.com/cheetah-fun-gs/goso/pkg/net/sohttp"
+	"github.com/cheetah-fun-gs/goso/pkg/so"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,8 +33,10 @@ func SoHTTP() (*sohttp.SoHTTP, error) {
 	}
 
 	// 最后注册 handler
-	for _, h := range nnet.Handlers {
-		s.Register(h)
+	for _, h := range generated.Handlers {
+		if h.IsAnyNet(so.NetTypeNNet) {
+			s.Register(h)
+		}
 	}
 	return s, nil
 }

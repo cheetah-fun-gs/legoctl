@@ -69,7 +69,7 @@ func runNew(projectPath string) error {
 	for _, line := range stdout {
 		fmt.Printf(line)
 	}
-	_, stdout, err = execplus.Command("go", "mod", "tidy")
+	_, stdout, err = execplus.Command("go", "mod", "vendor")
 	if err != nil {
 		return err
 	}
