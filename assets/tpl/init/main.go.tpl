@@ -15,7 +15,7 @@
 package main
 
 import (
-	"{{.ProjectName}}/goso/cmd"
+	"{{.ProjectName}}/cmd"
 )
 
 func main() {

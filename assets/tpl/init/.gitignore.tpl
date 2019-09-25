@@ -16,4 +16,4 @@
 .goland
 
 # binary
-{{.ProjectName}}
+goso

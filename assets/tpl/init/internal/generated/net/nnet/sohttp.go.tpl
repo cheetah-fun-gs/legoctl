@@ -1,4 +1,4 @@
-package gnet
+package nnet
 
 import (
 	"context"
@@ -34,7 +34,7 @@ var hs = []*handler.Handler{
 
 // SoHTTP 获取 gnet http 服务
 func SoHTTP() (*sohttp.SoHTTP, error) {
-	s, err := sohttp.NewGNet()
+	s, err := sohttp.NewLNet()
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func SoHTTP() (*sohttp.SoHTTP, error) {
 		c.String(http.StatusOK, "Welcome to goso")
 	})
 
-	if err := s.SetConfig(&sohttp.Config{Ports: []int{8080}}); err != nil {
+	if err := s.SetConfig(&sohttp.Config{Ports: []int{8000}}); err != nil {
 		return nil, err
 	}
 
