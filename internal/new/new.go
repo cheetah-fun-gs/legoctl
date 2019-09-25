@@ -18,7 +18,23 @@ type Data struct {
 }
 
 // New 渲染一个目录
-func New(projectPath string) error {
+func New(projectPath string) {
+	isExists, err := filepathplus.Exists(projectPath)
+	if err != nil {
+		panic(err)
+	}
+	if isExists {
+		fmt.Printf("new %s fail: dir is exists!\n", projectPath)
+		return
+	}
+
+	if err := runNew(projectPath); err != nil {
+		panic(err)
+	}
+	fmt.Printf("new %s success!\n", projectPath)
+}
+
+func runNew(projectPath string) error {
 	projectName := filepath.Base(projectPath)
 
 	data := &Data{ProjectName: projectName}
@@ -29,6 +45,7 @@ func New(projectPath string) error {
 	}
 
 	for _, tplFilePath := range files {
+		fmt.Println(tplFilePath)
 		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, common.TplRoot, projectPath, 1))
 		if err := render.File(data, tplFilePath, dstFilePath); err != nil {
 			return err
@@ -45,10 +62,8 @@ func New(projectPath string) error {
 		}
 	}
 
-	fmt.Printf("new %s success!\n", projectPath)
-
 	os.Chdir(projectPath)
-	_, stdout, err := execplus.Command("go", "mod")
+	_, stdout, err := execplus.Command("go", "mod", "init", projectName)
 	if err != nil {
 		return err
 	}

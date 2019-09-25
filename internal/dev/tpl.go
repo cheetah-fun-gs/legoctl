@@ -36,6 +36,7 @@ func isSkipCopy(path string) bool {
 	}
 
 	for _, s := range []string{
+		strings.Join([]string{string(os.PathSeparator), "goso", string(os.PathSeparator), ".git", string(os.PathSeparator)}, ""),
 		strings.Join([]string{string(os.PathSeparator), "goso", string(os.PathSeparator), "docs", string(os.PathSeparator)}, ""),
 		strings.Join([]string{string(os.PathSeparator), "goso", string(os.PathSeparator), "pkg", string(os.PathSeparator)}, ""),
 	} {
