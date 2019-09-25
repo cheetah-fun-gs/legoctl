@@ -19,7 +19,7 @@ type Data struct {
 
 // New 渲染一个目录
 func New(projectPath string) {
-	isExists, err := filepathplus.Exists(projectPath)
+	isExists, err := filepathplus.Exists(filepath.Join(projectPath, "main.go"))
 	if err != nil {
 		panic(err)
 	}
