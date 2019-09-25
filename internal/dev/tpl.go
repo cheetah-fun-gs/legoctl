@@ -6,9 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/cheetah-fun-gs/goso-cli/internal/common"
-
 	filepathplus "github.com/cheetah-fun-gs/goplus/path/filepath"
+	"github.com/cheetah-fun-gs/goso-cli/internal/common"
 )
 
 var (
