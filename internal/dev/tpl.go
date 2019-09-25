@@ -6,13 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/cheetah-fun-gs/goso-cli/internal/common"
+
 	filepathplus "github.com/cheetah-fun-gs/goplus/path/filepath"
 )
 
 var (
-	gp       = os.Getenv("GOPATH")
-	srcDir   = filepath.Join(gp, "src", "github.com", "cheetah-fun-gs", "goso")
-	dstDir   = filepath.Join(gp, "src", "github.com", "cheetah-fun-gs", "goso-cli", "assets", "tpl", "init")
 	replaces = []*filepathplus.ReplaceOption{
 		&filepathplus.ReplaceOption{
 			Old: `"github.com/cheetah-fun-gs/goso/internal`,
@@ -49,10 +48,10 @@ func isSkipCopy(path string) bool {
 
 // Tpl 构建模板
 func Tpl() {
-	if err := buildTpl(srcDir, dstDir, replaces, isSkipCopy); err != nil {
+	if err := buildTpl(common.DemoRoot, common.TplRoot, replaces, isSkipCopy); err != nil {
 		panic(err)
 	}
-	fmt.Printf("%s => %s success!\n", srcDir, dstDir)
+	fmt.Printf("%s => %s success!\n", common.DemoRoot, common.TplRoot)
 }
 
 func buildTpl(srcDir, dstDir string, replaces []*filepathplus.ReplaceOption, isSkipCopy func(name string) bool) error {
