@@ -23,7 +23,7 @@ func Gen(projectPath string) {
 		panic(err)
 	}
 
-	tplFilePath := filepath.Join(common.TplRoot, "generated", "handlers.go.tpl")
+	tplFilePath := filepath.Join(common.TplGenerated, "handlers.go.tpl")
 	goFilePath := filepath.Join(projectPath, "internal", "generated", "handlers.go")
 
 	if err := render.File(handlerFileRender, tplFilePath, goFilePath); err != nil {
