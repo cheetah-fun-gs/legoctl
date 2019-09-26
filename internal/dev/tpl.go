@@ -28,6 +28,7 @@ func isSkipCopy(path string) bool {
 		"go.mod":  true,
 		"go.sum":  true,
 		"LICENSE": true,
+		"goso":    true,
 	}
 	if _, ok := m[filepath.Base(path)]; ok {
 		return true
