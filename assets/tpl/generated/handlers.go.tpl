@@ -10,8 +10,7 @@ import (
 
 // Handlers gnet Handlers
 var Handlers = []*handler.Handler{
-	{{range .Handlers}}
-    &handler.Handler{
+	{{range .Handlers}}&handler.Handler{
 		Name:    "{{ .PackageTitle }}{{ .HandlerName }}",
 		Nets:    handlers{{ .PackageName }}.{{ .HandlerName }}NetTypes,
 		Routers: sohttp.NewRouters(handlers{{ .PackageName }}.{{ .HandlerName }}URIS, handlers{{ .PackageName }}.{{ .HandlerName }}HTTPMethods),
@@ -20,5 +19,6 @@ var Handlers = []*handler.Handler{
 		Func: func(ctx context.Context, req, resp interface{}) error {
 			return handlers{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, req.(*handlers{{ .PackageName }}.{{ .HandlerName }}Req), resp.(*handlers{{ .PackageName }}.{{ .HandlerName }}Resp))
 		},
-	},{{end}}
+	},
+    {{end}}
 }
