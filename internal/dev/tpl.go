@@ -25,10 +25,9 @@ var (
 
 func isSkipCopy(path string) bool {
 	m := map[string]bool{
-		"go.mod":    true,
-		"go.sum":    true,
-		"LICENSE":   true,
-		"README.md": true,
+		"go.mod":  true,
+		"go.sum":  true,
+		"LICENSE": true,
 	}
 	if _, ok := m[filepath.Base(path)]; ok {
 		return true
@@ -48,10 +47,24 @@ func isSkipCopy(path string) bool {
 
 // Tpl 构建模板
 func Tpl() {
-	if err := buildTpl(common.DemoRoot, common.TplRoot, replaces, isSkipCopy); err != nil {
+	isExists, err := filepathplus.Exists(common.TplInit)
+	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%s => %s success!\n", common.DemoRoot, common.TplRoot)
+	if isExists {
+		if err := os.RemoveAll(common.TplInit); err != nil {
+			panic(err)
+		}
+	}
+
+	if err := buildTpl(common.DemoRoot, common.TplInit, replaces, isSkipCopy); err != nil {
+		panic(err)
+	}
+
+	if err := filepathplus.CopyFile(filepath.Join(common.TplRoot, "README.md.tpl"), filepath.Join(common.TplInit, "README.md.tpl")); err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s => %s success!\n", common.DemoRoot, common.TplInit)
 }
 
 func buildTpl(srcDir, dstDir string, replaces []*filepathplus.ReplaceOption, isSkipCopy func(name string) bool) error {

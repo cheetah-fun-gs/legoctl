@@ -39,13 +39,13 @@ func runNew(projectPath string) error {
 
 	data := &Data{ProjectName: projectName}
 
-	files, err := filepathplus.Files(common.TplRoot)
+	files, err := filepathplus.Files(common.TplInit)
 	if err != nil {
 		return nil
 	}
 
 	for _, tplFilePath := range files {
-		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, common.TplRoot, projectPath, 1))
+		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, common.TplInit, projectPath, 1))
 		if err := render.File(data, tplFilePath, dstFilePath); err != nil {
 			return err
 		}
