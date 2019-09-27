@@ -4,7 +4,7 @@
 
 # 下载
 ```bash
-go get https://github.com/cheetah-fun-gs/goso-cli
+go get github.com/cheetah-fun-gs/goso-cli
 ```
 
 # 说明
