@@ -11,5 +11,5 @@ var (
 	DemoRoot     = filepath.Join(GoPath, "src", "github.com", "cheetah-fun-gs", "goso")
 	TplRoot      = filepath.Join(GoPath, "src", "github.com", "cheetah-fun-gs", "goso-cli", "assets", "tpl")
 	TplInit      = filepath.Join(TplRoot, "init")
-	TplGenerated = filepath.Join(GoPath, "generated")
+	TplGenerated = filepath.Join(TplRoot, "generated")
 )
