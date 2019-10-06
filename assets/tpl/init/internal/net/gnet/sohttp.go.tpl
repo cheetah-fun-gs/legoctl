@@ -3,7 +3,7 @@ package gnet
 import (
 	"net/http"
 
-	"{{.ProjectName}}/internal/biz/handlers"
+	"{{.ProjectName}}/internal/biz/handler"
 	"{{.ProjectName}}/internal/common"
 	"{{.ProjectName}}/internal/generated"
 	sohttp "github.com/cheetah-fun-gs/goso/pkg/net/sohttp"
@@ -15,9 +15,9 @@ import (
 func handleErrorSoNet(code int, err error) interface{} {
 	switch code {
 	case http.StatusBadRequest:
-		return handlers.GetCommonResp(handlers.CommonRespCodeClientUnknown, err)
+		return handler.GetCommonResp(handler.CommonRespCodeClientUnknown, err)
 	default:
-		return handlers.GetCommonResp(handlers.CommonRespCodeServerUnknown, err)
+		return handler.GetCommonResp(handler.CommonRespCodeServerUnknown, err)
 	}
 }
 
