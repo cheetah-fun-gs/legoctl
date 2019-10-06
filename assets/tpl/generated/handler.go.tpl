@@ -2,7 +2,7 @@ package generated
 
 import (
 	"context"
-    {{range .Imports}}handlers{{ . }}
+    {{range .Imports}}handler{{ . }}
 	{{end}}
 	"github.com/cheetah-fun-gs/goso/pkg/handler"
 	sohttp "github.com/cheetah-fun-gs/goso/pkg/net/sohttp"
