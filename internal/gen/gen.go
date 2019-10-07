@@ -24,8 +24,8 @@ func Gen(projectPath string) {
 		panic(err)
 	}
 
-	tplFilePath := filepath.Join(common.TplGenerated, "handlers.go.tpl")
-	goFilePath := filepath.Join(projectPath, "internal", "generated", "handlers.go")
+	tplFilePath := filepath.Join(common.TplGenerated, "handler.go.tpl")
+	goFilePath := filepath.Join(projectPath, "internal", "generated", "handler.go")
 
 	if err := render.File(handlerFileRender, tplFilePath, goFilePath); err != nil {
 		panic(err)
@@ -44,7 +44,7 @@ func Gen(projectPath string) {
 
 // HandlerFileRender 处理器文件渲染对象
 type HandlerFileRender struct {
-	Imports  []string // handlersxxx "%s/internal/biz/handlers/xxx"
+	Imports  []string // handlersxxx "%s/internal/biz/handler/xxx"
 	Handlers []*HandlerRender
 }
 
@@ -115,7 +115,7 @@ func findHandlerRender(packageName string, objs []*ast.Object) (bool, *HandlerRe
 }
 
 func handerFileScan(projectPath string) (*HandlerFileRender, error) {
-	goFilePaths, err := filepathplus.Files(filepath.Join(projectPath, "internal", "biz", "handlers"))
+	goFilePaths, err := filepathplus.Files(filepath.Join(projectPath, "internal", "biz", "handler"))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +134,7 @@ func handerFileScan(projectPath string) (*HandlerFileRender, error) {
 		ok, handlerRender := findHandlerRender(packageName, objs)
 		if ok {
 			if _, ok := imports[packageName]; !ok {
-				imports[packageName] = fmt.Sprintf("%s/internal/biz/handlers/%s", projectName, packageName)
+				imports[packageName] = fmt.Sprintf("%s/internal/biz/handler/%s", projectName, packageName)
 			}
 			handlers = append(handlers, handlerRender)
 		}
