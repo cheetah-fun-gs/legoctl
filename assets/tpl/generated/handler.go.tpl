@@ -12,12 +12,12 @@ import (
 var Handlers = []*handler.Handler{
 	{{range .Handlers}}&handler.Handler{
 		Name:    "{{ .PackageTitle }}{{ .HandlerName }}",
-		Nets:    handlers{{ .PackageName }}.{{ .HandlerName }}NetTypes,
-		Routers: sohttp.NewRouters(handlers{{ .PackageName }}.{{ .HandlerName }}URIS, handlers{{ .PackageName }}.{{ .HandlerName }}HTTPMethods),
-		Req:     &handlers{{ .PackageName }}.{{ .HandlerName }}Req{},
-		Resp:    &handlers{{ .PackageName }}.{{ .HandlerName }}Resp{},
+		Nets:    handler{{ .PackageName }}.{{ .HandlerName }}NetTypes,
+		Routers: sohttp.NewRouters(handler{{ .PackageName }}.{{ .HandlerName }}URIS, handler{{ .PackageName }}.{{ .HandlerName }}HTTPMethods),
+		Req:     &handler{{ .PackageName }}.{{ .HandlerName }}Req{},
+		Resp:    &handler{{ .PackageName }}.{{ .HandlerName }}Resp{},
 		Func: func(ctx context.Context, req, resp interface{}) error {
-			return handlers{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, req.(*handlers{{ .PackageName }}.{{ .HandlerName }}Req), resp.(*handlers{{ .PackageName }}.{{ .HandlerName }}Resp))
+			return handler{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, req.(*handler{{ .PackageName }}.{{ .HandlerName }}Req), resp.(*handler{{ .PackageName }}.{{ .HandlerName }}Resp))
 		},
 	},
     {{end}}
