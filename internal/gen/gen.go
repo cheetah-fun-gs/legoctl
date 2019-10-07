@@ -56,11 +56,10 @@ type HandlerRender struct {
 }
 
 var handlerChecks = map[string]ast.ObjKind{
-	"NetTypes":    ast.Var,
-	"URIS":        ast.Var,
-	"HTTPMethods": ast.Var,
-	"Req":         ast.Typ,
-	"Resp":        ast.Typ,
+	"NetTypes": ast.Var,
+	"Routers":  ast.Var,
+	"Req":      ast.Typ,
+	"Resp":     ast.Typ,
 }
 
 func findHandlerRender(packageName string, objs []*ast.Object) (bool, *HandlerRender) {
