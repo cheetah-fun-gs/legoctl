@@ -5,18 +5,35 @@ import (
     {{range .Imports}}handler{{ . }}
 	{{end}}
 	"github.com/cheetah-fun-gs/goso/pkg/handler"
+	"github.com/cheetah-fun-gs/goso/pkg/so"
 )
 
-// Handlers gnet Handlers
-var Handlers = []*handler.Handler{
-	{{range .Handlers}}&handler.Handler{
-		Name:    "{{ .PackageTitle }}{{ .HandlerName }}",
-		Nets:    handler{{ .PackageName }}.{{ .HandlerName }}NetTypes,
-		Routers: handler{{ .PackageName }}.{{ .HandlerName }}Routers,
-		Req:     &handler{{ .PackageName }}.{{ .HandlerName }}Req{},
-		Resp:    &handler{{ .PackageName }}.{{ .HandlerName }}Resp{},
-		Func: func(ctx context.Context, req, resp interface{}) error {
-			return handler{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, req.(*handler{{ .PackageName }}.{{ .HandlerName }}Req), resp.(*handler{{ .PackageName }}.{{ .HandlerName }}Resp))
+{{range .Handlers}}// {{ .PackageTitle }}{{ .HandlerName }}Handler {{ .PackageTitle }}{{ .HandlerName }}Handler
+type {{ .PackageTitle }}{{ .HandlerName }}Handler struct {
+	*handler.Handler
+}
+
+// CloneReq CloneReq
+func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) CloneReq() interface{} {
+	return &handler{{ .PackageName }}.{{ .HandlerName }}Req{}
+}
+
+// CloneResp CloneResp
+func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) CloneResp() interface{} {
+	return &handler{{ .PackageName }}.{{ .HandlerName }}Resp{}
+}
+{{end}}
+
+// Handlers Handlers
+var Handlers = []so.Handler{
+	{{range .Handlers}}&{{ .PackageTitle }}{{ .HandlerName }}Handler{
+		&handler.Handler{
+			Name:    "{{ .PackageTitle }}{{ .HandlerName }}",
+			Nets:    handler{{ .PackageName }}.{{ .HandlerName }}NetTypes,
+			Routers: handler{{ .PackageName }}.{{ .HandlerName }}Routers,
+			Func: func(ctx context.Context, req, resp interface{}) error {
+				return handler{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, req.(*handler{{ .PackageName }}.{{ .HandlerName }}Req), resp.(*handler{{ .PackageName }}.{{ .HandlerName }}Resp))
+			},
 		},
 	},
     {{end}}
