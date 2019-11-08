@@ -27,7 +27,7 @@ func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) CloneResp() interface{} {
 // Handlers Handlers
 var Handlers = []so.Handler{
 	{{range .Handlers}}&{{ .PackageTitle }}{{ .HandlerName }}Handler{
-		&handler.Handler{
+		Handler: &handler.Handler{
 			Name:    "{{ .PackageTitle }}{{ .HandlerName }}",
 			Nets:    handler{{ .PackageName }}.{{ .HandlerName }}NetTypes,
 			Routers: handler{{ .PackageName }}.{{ .HandlerName }}Routers,
