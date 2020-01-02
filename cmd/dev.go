@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/cheetah-fun-gs/goso-cli/internal/dev"
+	"github.com/cheetah-fun-gs/legoctl/internal/dev"
 	"github.com/spf13/cobra"
 )
 

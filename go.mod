@@ -1,4 +1,4 @@
-module github.com/cheetah-fun-gs/goso-cli
+module github.com/cheetah-fun-gs/legoctl
 
 go 1.13
 

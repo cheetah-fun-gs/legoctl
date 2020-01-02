@@ -1,30 +1,30 @@
-# goso-cli
+# legoctl
 
-[goso](https://github.com/cheetah-fun-gs/goso)的管理工具，要求go1.13
+[lego](https://github.com/cheetah-fun-gs/lego)的管理工具，要求go1.13
 
 # 下载
 ```bash
-go get github.com/cheetah-fun-gs/goso-cli
+go get github.com/cheetah-fun-gs/legoctl
 ```
 
 # 说明
 ```
-goso项目管理工具
+lego项目管理工具
 
 Usage:
-  goso-cli [flags]
-  goso-cli [command]
+  legoctl [flags]
+  legoctl [command]
 
 Available Commands:
   dev         开发者命令
-  gen         为goso项目生成代码
+  gen         为lego项目生成代码
   help        Help about any command
-  new         创建一个goso项目
+  new         创建一个lego项目
 
 Flags:
-  -h, --help      help for goso-cli
+  -h, --help      help for legoctl
   -v, --verbose   是否输出详细日志
-      --version   version for goso-cli
+      --version   version for legoctl
 
-Use "goso-cli [command] --help" for more information about a command.
+Use "legoctl [command] --help" for more information about a command.
 ```

@@ -13,8 +13,8 @@ import (
 	execplus "github.com/cheetah-fun-gs/goplus/exec"
 	"github.com/cheetah-fun-gs/goplus/gostyle"
 	filepathplus "github.com/cheetah-fun-gs/goplus/path/filepath"
-	"github.com/cheetah-fun-gs/goso-cli/internal/common"
-	"github.com/cheetah-fun-gs/goso-cli/pkg/render"
+	"github.com/cheetah-fun-gs/legoctl/internal/common"
+	"github.com/cheetah-fun-gs/legoctl/pkg/render"
 )
 
 // Gen 生产项目代码

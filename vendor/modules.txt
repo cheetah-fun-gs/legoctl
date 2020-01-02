@@ -1,0 +1,10 @@
+# github.com/cheetah-fun-gs/goplus v0.0.0-20190925194457-7072e5ce4522
+github.com/cheetah-fun-gs/goplus/exec
+github.com/cheetah-fun-gs/goplus/gostyle
+github.com/cheetah-fun-gs/goplus/path/filepath
+# github.com/inconshreveable/mousetrap v1.0.0
+github.com/inconshreveable/mousetrap
+# github.com/spf13/cobra v0.0.5
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.3
+github.com/spf13/pflag

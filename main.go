@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/cheetah-fun-gs/goso-cli/cmd"
+	"github.com/cheetah-fun-gs/legoctl/cmd"
 )
 
 func main() {
