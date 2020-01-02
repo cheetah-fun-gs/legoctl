@@ -24,7 +24,7 @@ func New(projectPath, templateName string) error {
 		return err
 	}
 	if isExists {
-		return fmt.Errorf("%v is exists", isExists)
+		return fmt.Errorf("%v is exists", projectPath)
 	}
 
 	// 确认模板目录
@@ -33,10 +33,8 @@ func New(projectPath, templateName string) error {
 	if err != nil {
 		return err
 	}
-	if isExists {
-		if err := os.RemoveAll(templateNewPath); err != nil {
-			return err
-		}
+	if !isExists {
+		return fmt.Errorf("%v is not exists", templateNewPath)
 	}
 
 	if err := buildNew(templateNewPath, projectPath); err != nil {
