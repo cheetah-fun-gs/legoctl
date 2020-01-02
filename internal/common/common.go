@@ -38,6 +38,10 @@ func GetTemplateRoot(templateName string) string {
 
 // GetProjectPath 获取目标项目地址
 func GetProjectPath(path string) string {
+	path, err := filepath.Abs(path)
+	if err != nil {
+		panic(err)
+	}
 	info, err := os.Stat(path)
 	if err != nil {
 		panic(err)
