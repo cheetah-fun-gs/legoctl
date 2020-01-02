@@ -67,7 +67,7 @@ func New(projectPath, templateName string) error {
 		}
 	}
 
-	if err := build(projectPath, templateNewPath, templateName, isSkipCopy); err != nil {
+	if err := buildNew(projectPath, templateNewPath, templateName, isSkipCopy); err != nil {
 		return err
 	}
 
@@ -75,7 +75,7 @@ func New(projectPath, templateName string) error {
 	return nil
 }
 
-func build(srcDir, dstDir, templateName string, isSkipCopy func(path, projectPath string) bool) error {
+func buildNew(srcDir, dstDir, templateName string, isSkipCopy func(path, projectPath string) bool) error {
 	files, err := filepathplus.Files(srcDir)
 	if err != nil {
 		return nil

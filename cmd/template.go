@@ -15,8 +15,11 @@ var templateCmd = &cobra.Command{
 var templateNewCmd = &cobra.Command{
 	Short: "创建模板",
 	Use:   "new <project>",
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		template.New(projectPath, templateName)
+		if err := template.New(args[0], templateName); err != nil {
+			panic(err)
+		}
 	},
 }
 

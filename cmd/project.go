@@ -1,19 +1,29 @@
 package cmd
 
 import (
-	"github.com/cheetah-fun-gs/legoctl/internal/command/gen"
+	"github.com/cheetah-fun-gs/legoctl/internal/command/project"
 	"github.com/spf13/cobra"
 )
 
-var generateCmd = &cobra.Command{
-	Use:   "gen <project>",
-	Short: "为lego项目生成代码",
+var projectCmd = &cobra.Command{
+	Short: "项目管理",
+	Use:   "project",
+	Run: func(cmd *cobra.Command, args []string) {
+	},
+}
+
+var projectNewCmd = &cobra.Command{
+	Short: "创建项目",
+	Use:   "new <project>",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		gen.Gen(args[0])
+		if err := project.New(args[0], templateName); err != nil {
+			panic(err)
+		}
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(generateCmd)
+	rootCmd.AddCommand(projectCmd)
+	projectCmd.AddCommand(projectNewCmd)
 }

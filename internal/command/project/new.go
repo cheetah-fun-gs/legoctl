@@ -18,34 +18,46 @@ type Data struct {
 }
 
 // New 渲染一个目录
-func New(projectPath string) {
+func New(projectPath, templateName string) error {
 	isExists, err := filepathplus.Exists(filepath.Join(projectPath, "main.go"))
 	if err != nil {
-		panic(err)
+		return err
 	}
 	if isExists {
-		fmt.Printf("new %s fail: dir is exists!\n", projectPath)
-		return
+		return fmt.Errorf("%v is exists", isExists)
 	}
 
-	if err := runNew(projectPath); err != nil {
-		panic(err)
+	// 确认模板目录
+	templateNewPath := filepath.Join(common.GetTemplateRoot(templateName), "new")
+	isExists, err = filepathplus.Exists(templateNewPath)
+	if err != nil {
+		return err
+	}
+	if isExists {
+		if err := os.RemoveAll(templateNewPath); err != nil {
+			return err
+		}
+	}
+
+	if err := buildNew(templateNewPath, projectPath); err != nil {
+		return err
 	}
 	fmt.Printf("new %s success!\n", projectPath)
+	return nil
 }
 
-func runNew(projectPath string) error {
+func buildNew(templateNewPath, projectPath string) error {
 	projectName := filepath.Base(projectPath)
 
 	data := &Data{ProjectName: projectName}
 
-	files, err := filepathplus.Files(common.TplInit)
+	files, err := filepathplus.Files(templateNewPath)
 	if err != nil {
 		return nil
 	}
 
 	for _, tplFilePath := range files {
-		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, common.TplInit, projectPath, 1))
+		dstFilePath := filepathplus.NoExt(strings.Replace(tplFilePath, templateNewPath, projectPath, 1))
 		if err := render.File(data, tplFilePath, dstFilePath); err != nil {
 			return err
 		}
