@@ -1,4 +1,4 @@
-package gen
+package handler
 
 import (
 	"fmt"
@@ -10,59 +10,29 @@ import (
 	"path/filepath"
 	"strings"
 
-	execplus "github.com/cheetah-fun-gs/goplus/exec"
 	"github.com/cheetah-fun-gs/goplus/gostyle"
 	filepathplus "github.com/cheetah-fun-gs/goplus/path/filepath"
-	"github.com/cheetah-fun-gs/legoctl/internal/common"
-	"github.com/cheetah-fun-gs/legoctl/pkg/render"
 )
 
-// Gen 生产项目代码
-func Gen(projectPath string) {
-	handlerFileRender, err := handerFileScan(projectPath)
-	if err != nil {
-		panic(err)
-	}
-
-	tplFilePath := filepath.Join(common.TplGenerated, "handler.go.tpl")
-	goFilePath := filepath.Join(projectPath, "internal", "generated", "handler.go")
-
-	if err := render.File(handlerFileRender, tplFilePath, goFilePath); err != nil {
-		panic(err)
-	}
-
-	_, stdout, err := execplus.Command("gofmt", "-w", goFilePath)
-	if err != nil {
-		panic(err)
-	}
-	for _, line := range stdout {
-		fmt.Printf(line)
-	}
-
-	fmt.Printf("gen %s success!\n", projectPath)
-}
-
-// HandlerFileRender 处理器文件渲染对象
-type HandlerFileRender struct {
+// FileRender 处理器文件渲染对象
+type FileRender struct {
 	Imports  []string // handlersxxx "%s/internal/biz/handler/xxx"
-	Handlers []*HandlerRender
+	Handlers []*Render
 }
 
-// HandlerRender 处理器渲染对象
-type HandlerRender struct {
+// Render 处理器渲染对象
+type Render struct {
 	PackageTitle string // 首字母大写
 	PackageName  string // 全小写
 	HandlerName  string
 }
 
 var handlerChecks = map[string]ast.ObjKind{
-	"NetTypes": ast.Var,
-	"Routers":  ast.Var,
-	"Req":      ast.Typ,
-	"Resp":     ast.Typ,
+	"Req":  ast.Typ,
+	"Resp": ast.Typ,
 }
 
-func findHandlerRender(packageName string, objs []*ast.Object) (bool, *HandlerRender) {
+func findHandlerRender(packageName string, objs []*ast.Object) (bool, *Render) {
 	var handlerName string
 	for _, o := range objs {
 		if o.Kind == ast.Fun && strings.HasSuffix(o.Name, "Handle") {
@@ -105,15 +75,15 @@ func findHandlerRender(packageName string, objs []*ast.Object) (bool, *HandlerRe
 		return false, nil
 	}
 
-	handlerRender := &HandlerRender{
+	return true, &Render{
 		PackageTitle: gostyle.FormatToCamelCase(packageName),
 		PackageName:  packageName,
 		HandlerName:  handlerName,
 	}
-	return true, handlerRender
 }
 
-func handerFileScan(projectPath string) (*HandlerFileRender, error) {
+// Scan 扫描
+func Scan(projectPath string) (*FileRender, error) {
 	goFilePaths, err := filepathplus.Files(filepath.Join(projectPath, "internal", "biz", "handler"))
 	if err != nil {
 		return nil, err
@@ -122,7 +92,7 @@ func handerFileScan(projectPath string) (*HandlerFileRender, error) {
 	projectName := filepath.Base(projectPath)
 
 	var imports = map[string]string{}
-	var handlers = []*HandlerRender{}
+	var handlers = []*Render{}
 
 	for _, goFilePath := range goFilePaths {
 		packageName, objs, err := astScan(goFilePath)
@@ -139,7 +109,7 @@ func handerFileScan(projectPath string) (*HandlerFileRender, error) {
 		}
 	}
 
-	handleFileRender := &HandlerFileRender{
+	handleFileRender := &FileRender{
 		Imports:  []string{},
 		Handlers: handlers,
 	}

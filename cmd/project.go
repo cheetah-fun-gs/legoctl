@@ -24,7 +24,19 @@ var projectNewCmd = &cobra.Command{
 	},
 }
 
+var projectGenCmd = &cobra.Command{
+	Short: "刷新项目",
+	Use:   "gen <project>",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := project.Gen(args[0], templateName); err != nil {
+			panic(err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(projectCmd)
 	projectCmd.AddCommand(projectNewCmd)
+	projectCmd.AddCommand(projectGenCmd)
 }

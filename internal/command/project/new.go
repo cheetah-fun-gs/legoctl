@@ -13,7 +13,7 @@ import (
 )
 
 // Data 新工程的data
-type Data struct {
+type newData struct {
 	ProjectName string
 }
 
@@ -47,7 +47,7 @@ func New(projectPath, templateName string) error {
 func buildNew(templateNewPath, projectPath string) error {
 	projectName := filepath.Base(projectPath)
 
-	data := &Data{ProjectName: projectName}
+	data := &newData{ProjectName: projectName}
 
 	files, err := filepathplus.Files(templateNewPath)
 	if err != nil {
