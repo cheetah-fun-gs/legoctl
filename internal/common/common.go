@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -33,4 +34,19 @@ func GetCtlRoot() string {
 // GetTemplateRoot 获取模板根目录
 func GetTemplateRoot(templateName string) string {
 	return filepath.Join(GetCtlRoot(), "assets", "templates", templateName)
+}
+
+// GetProjectPath 获取目标项目地址
+func GetProjectPath(path string) string {
+	info, err := os.Stat(path)
+	if err != nil {
+		panic(err)
+	}
+	if info.IsDir() {
+		return path
+	}
+	if filepath.Base(path) == "main.go" {
+		return filepath.Dir(path)
+	}
+	panic(fmt.Errorf("%v is not projectPath", path))
 }

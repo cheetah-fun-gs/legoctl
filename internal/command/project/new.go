@@ -19,6 +19,8 @@ type newData struct {
 
 // New 渲染一个目录
 func New(projectPath, templateName string) error {
+	projectPath = common.GetProjectPath(projectPath)
+
 	isExists, err := filepathplus.Exists(filepath.Join(projectPath, "main.go"))
 	if err != nil {
 		return err

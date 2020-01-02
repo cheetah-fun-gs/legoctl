@@ -14,6 +14,7 @@ import (
 
 // Gen 生产项目代码
 func Gen(projectPath, templateName string) error {
+	projectPath = common.GetProjectPath(projectPath)
 	// 确认模板目录
 	templateGenPath := filepath.Join(common.GetTemplateRoot(templateName), "gen")
 	isExists, err := filepathplus.Exists(templateGenPath)
