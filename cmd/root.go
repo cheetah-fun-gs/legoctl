@@ -49,5 +49,5 @@ var (
 
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "是否输出详细日志")
-	rootCmd.PersistentFlags().StringVarP(&templateName, "template-name", "t", "lego", "目标名称")
+	rootCmd.PersistentFlags().StringVarP(&templateName, "template-name", "t", "lego", "模板名称")
 }

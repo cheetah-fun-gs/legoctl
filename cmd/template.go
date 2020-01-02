@@ -8,6 +8,7 @@ import (
 var templateCmd = &cobra.Command{
 	Short: "开发者命令：模板管理",
 	Use:   "template",
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 	},
 }
