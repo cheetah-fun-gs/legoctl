@@ -7,5 +7,6 @@ import (
 	_ "{{.ProjectName}}/internal/svc"
 )
 
+//go:generate legoctl project gen $GOFILE
 func main() {
 }
