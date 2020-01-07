@@ -8,8 +8,8 @@ import (
 	"reflect"
 	"strings"
 
-	"{{.ProjectName}}/internal/biz/handler"
-	allhandler "{{.ProjectName}}/internal/generated/handler"
+	"{{.PackageName}}/internal/biz/handler"
+	allhandler "{{.PackageName}}/internal/generated/handler"
 	legocore "github.com/cheetah-fun-gs/lego/pkg/core"
 	legogin "github.com/cheetah-fun-gs/lego/pkg/svc/gin"
 	"github.com/gin-gonic/gin"

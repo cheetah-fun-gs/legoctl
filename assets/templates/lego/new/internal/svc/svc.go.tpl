@@ -6,7 +6,7 @@ import (
 
 	mconfiger "github.com/cheetah-fun-gs/goplus/multier/multiconfiger"
 	"github.com/cheetah-fun-gs/goplus/structure"
-	svcgin "{{.ProjectName}}/internal/svc/gin"
+	svcgin "{{.PackageName}}/internal/svc/gin"
 )
 
 func init() {

@@ -8,7 +8,7 @@ import (
 	"time"
 
 	logger "github.com/cheetah-fun-gs/goplus/multier/multilogger"
-	"{{.ProjectName}}/internal/biz/handler"
+	"{{.PackageName}}/internal/biz/handler"
 	legogin "github.com/cheetah-fun-gs/lego/pkg/svc/gin"
 	"github.com/gin-gonic/gin"
 )

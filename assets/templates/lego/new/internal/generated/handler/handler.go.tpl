@@ -5,7 +5,7 @@ import (
 	"context"
 	"fmt"
 
-	handlercommon "{{.ProjectName}}/internal/biz/handler/common"
+	handlercommon "{{.PackageName}}/internal/biz/handler/common"
 	legocore "github.com/cheetah-fun-gs/lego/pkg/core"
 )
 
@@ -70,6 +70,6 @@ var CommonPing = &CommonPingHandler{
 }
 
 // Handlers 所有handler
-var Handlers = []legocore.Handler{
-	CommonPing,
+var Handlers = map[string]legocore.Handler{
+	"CommonPing": CommonPing,
 }

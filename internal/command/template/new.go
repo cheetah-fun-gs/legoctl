@@ -15,11 +15,11 @@ var (
 		"lego": []*filepathplus.ReplaceOption{
 			&filepathplus.ReplaceOption{
 				Old: `"github.com/cheetah-fun-gs/lego/internal`,
-				New: `"{{.ProjectName}}/internal`,
+				New: `"{{.PackageName}}/internal`,
 			},
 			&filepathplus.ReplaceOption{
 				Old: `"github.com/cheetah-fun-gs/lego/cmd"`,
-				New: `"{{.ProjectName}}/cmd"`,
+				New: `"{{.PackageName}}/cmd"`,
 			},
 		},
 	}
@@ -46,7 +46,7 @@ func isSkipCopy(path, projectName string) bool {
 }
 
 // New 创建模板
-func New(projectPath, templateName string) error {
+func New(projectPath string, opt *Opt) error {
 	// 确认目标目录
 	isExists, err := filepathplus.Exists(projectPath)
 	if err != nil {
@@ -56,7 +56,7 @@ func New(projectPath, templateName string) error {
 		return fmt.Errorf("%v is not exist", projectPath)
 	}
 	// 确认模板目录
-	templateNewPath := filepath.Join(common.GetTemplateRoot(templateName), "new")
+	templateNewPath := filepath.Join(common.GetTemplateRoot(opt.TemplateName), "new")
 	isExists, err = filepathplus.Exists(templateNewPath)
 	if err != nil {
 		return err
@@ -67,7 +67,7 @@ func New(projectPath, templateName string) error {
 		}
 	}
 
-	if err := buildNew(projectPath, templateNewPath, templateName, isSkipCopy); err != nil {
+	if err := buildNew(projectPath, templateNewPath, opt.TemplateName, isSkipCopy); err != nil {
 		return err
 	}
 

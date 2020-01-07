@@ -72,7 +72,7 @@ var {{ .PackageTitle }}{{ .HandlerName }} = &{{ .PackageTitle }}{{ .HandlerName 
 {{end}}
 
 // Handlers 所有handler
-var Handlers = []legocore.Handler{
-	{{range .Handlers}}{{ .PackageTitle }}{{ .HandlerName }},
+var Handlers = map[string]legocore.Handler{
+	{{range .Handlers}}"{{ .PackageTitle }}{{ .HandlerName }}" : {{ .PackageTitle }}{{ .HandlerName }},
     {{end}}
 }

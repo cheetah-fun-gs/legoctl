@@ -14,12 +14,15 @@ import (
 
 // Data 新工程的data
 type newData struct {
-	ProjectName string
+	PackageName string
 }
 
 // New 渲染一个目录
-func New(projectPath, templateName string) error {
+func New(projectPath string, opt *Opt) error {
 	projectPath = common.GetProjectPath(projectPath)
+	if opt.PackageName == "" {
+		opt.PackageName = filepath.Base(projectPath)
+	}
 
 	isExists, err := filepathplus.Exists(filepath.Join(projectPath, "main.go"))
 	if err != nil {
@@ -30,7 +33,7 @@ func New(projectPath, templateName string) error {
 	}
 
 	// 确认模板目录
-	templateNewPath := filepath.Join(common.GetTemplateRoot(templateName), "new")
+	templateNewPath := filepath.Join(common.GetTemplateRoot(opt.TemplateName), "new")
 	isExists, err = filepathplus.Exists(templateNewPath)
 	if err != nil {
 		return err
@@ -39,17 +42,15 @@ func New(projectPath, templateName string) error {
 		return fmt.Errorf("%v is not exists", templateNewPath)
 	}
 
-	if err := buildNew(templateNewPath, projectPath); err != nil {
+	if err := buildNew(templateNewPath, projectPath, opt); err != nil {
 		return err
 	}
 	fmt.Printf("new %s success!\n", projectPath)
 	return nil
 }
 
-func buildNew(templateNewPath, projectPath string) error {
-	projectName := filepath.Base(projectPath)
-
-	data := &newData{ProjectName: projectName}
+func buildNew(templateNewPath, projectPath string, opt *Opt) error {
+	data := &newData{PackageName: opt.PackageName}
 
 	files, err := filepathplus.Files(templateNewPath)
 	if err != nil {
@@ -74,7 +75,7 @@ func buildNew(templateNewPath, projectPath string) error {
 	}
 
 	os.Chdir(projectPath)
-	_, stdout, err := execplus.Command("go", "mod", "init", projectName)
+	_, stdout, err := execplus.Command("go", "mod", "init", opt.PackageName)
 	if err != nil {
 		return err
 	}

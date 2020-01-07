@@ -18,7 +18,11 @@ var projectNewCmd = &cobra.Command{
 	Use:   "new <project>",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := project.New(args[0], templateName); err != nil {
+		opt := &project.Opt{
+			TemplateName: templateName,
+			PackageName:  packageName,
+		}
+		if err := project.New(args[0], opt); err != nil {
 			panic(err)
 		}
 	},
@@ -29,7 +33,11 @@ var projectGenCmd = &cobra.Command{
 	Use:   "gen <project>",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := project.Gen(args[0], templateName); err != nil {
+		opt := &project.Opt{
+			TemplateName: templateName,
+			PackageName:  packageName,
+		}
+		if err := project.Gen(args[0], opt); err != nil {
 			panic(err)
 		}
 	},

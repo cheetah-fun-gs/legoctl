@@ -13,10 +13,14 @@ import (
 )
 
 // Gen 生产项目代码
-func Gen(projectPath, templateName string) error {
+func Gen(projectPath string, opt *Opt) error {
 	projectPath = common.GetProjectPath(projectPath)
+	if opt.PackageName == "" {
+		opt.PackageName = filepath.Base(projectPath)
+	}
+
 	// 确认模板目录
-	templateGenPath := filepath.Join(common.GetTemplateRoot(templateName), "gen")
+	templateGenPath := filepath.Join(common.GetTemplateRoot(opt.TemplateName), "gen")
 	isExists, err := filepathplus.Exists(templateGenPath)
 	if err != nil {
 		return err

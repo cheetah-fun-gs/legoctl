@@ -3,7 +3,7 @@ package common
 import (
 	"context"
 
-	"{{.ProjectName}}/internal/biz/handler"
+	"{{.PackageName}}/internal/biz/handler"
 )
 
 // 常量定义

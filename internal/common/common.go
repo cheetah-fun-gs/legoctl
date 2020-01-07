@@ -42,6 +42,14 @@ func GetProjectPath(path string) string {
 	if err != nil {
 		panic(err)
 	}
+	ok, err := filepathplus.Exists(path)
+	if err != nil {
+		panic(err)
+	}
+	if !ok { // 不存在就作为目录
+		return path
+	}
+
 	info, err := os.Stat(path)
 	if err != nil {
 		panic(err)
