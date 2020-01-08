@@ -12,7 +12,7 @@ legoctl project new <path> [-t template-name] [-p package-name]
 ```
 
 # 模板说明
-- [基础项目模板 lego](assets/templates/lego/README.md)
+- ```lego``` [基础项目模板](assets/templates/lego/README.md)
 
 # 命令说明
 ```
