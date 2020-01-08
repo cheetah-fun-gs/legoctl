@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	_ "github.com/cheetah-fun-gs/lego/cmd/scfgw"
 	"{{.PackageName}}/internal/common"
 	allhandler "{{.PackageName}}/internal/generated/handler"
 	svcscfgw "{{.PackageName}}/internal/svc/scfgw"

@@ -7,10 +7,15 @@
 ├── assets                  # 资源目录
 ├── build                   # 构建部署
 ├── cmd                     # 启动参数解析
+│   ├── web                 #   传统部署
+│   └── scfgw               #   腾讯云scf gateway
 ├── configs                 # 配置目录
 │   ├── dev                 #   开发/联调/测试环境
 │   ├── local               #   本地调试环境
 │   └── prod                #   生产环境
+├── deployments
+│   └── faas                # faas函数目录
+│       └── scfgw           #   腾讯云scf gateway入口
 ├── internal                # 项目私有代码
 │   ├── biz                 #   业务目录
 │   │   ├── aop             #       aop层 规划中 占坑
@@ -25,13 +30,14 @@
 │   │   ├── mgo.go          #   mongo管理
 │   │   ├── redigo.go       #   redis管理
 │   │   └── sql.go          #   sqldb管理
-│   ├── generated   # 生成代码目录（不要手工修改）
-│   │   └── handler #   处理器
-│   └── svc         # 服务管理目录
-│       ├── gin     #   gin框架
+│   ├── generated           # 生成代码目录（不要手工修改）
+│   │   └── handler         #   处理器
+│   └── svc                 # 服务管理目录
+│       ├── gin             #   gin服务
+│       ├── scfgw           #   腾讯云scf gateway服务
 │       └── svc.go
-├── main.go
-├── pkg             # 共有代码（可做为二方库开放）
+├── main.go                 # 传统部署入口
+├── pkg                     # 共有代码（可做为二方库开放，不建议私有项目使用)
 └── vendor
 ```
 ## 使用说明
@@ -147,4 +153,11 @@ func (){
     session, err := mmgodb.CloneN("demo") // demo mgo session
     defer session.Close()
 }()
+```
+
+
+### 腾讯云scf api网关触发器
+```
+cd $PROJECT/deployments/faas/scfgw
+go build -mod vendor
 ```

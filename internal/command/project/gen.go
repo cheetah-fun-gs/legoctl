@@ -29,7 +29,7 @@ func Gen(projectPath string, opt *Opt) error {
 		return fmt.Errorf("%v is not exists", templateGenPath)
 	}
 
-	handlerFileRender, err := handler.Scan(projectPath)
+	handlerFileRender, err := handler.Scan(projectPath, opt.PackageName)
 	if err != nil {
 		return err
 	}

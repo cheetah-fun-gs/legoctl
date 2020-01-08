@@ -29,7 +29,7 @@ var projectNewCmd = &cobra.Command{
 }
 
 var projectGenCmd = &cobra.Command{
-	Short: "刷新项目",
+	Short: "生成代码",
 	Use:   "gen <project>",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

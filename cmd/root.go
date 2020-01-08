@@ -51,5 +51,5 @@ var (
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "是否输出详细日志")
 	rootCmd.PersistentFlags().StringVarP(&templateName, "template-name", "t", "lego", "模板名称")
-	rootCmd.PersistentFlags().StringVarP(&packageName, "package-name", "p", "lego", "包名称")
+	rootCmd.PersistentFlags().StringVarP(&packageName, "package-name", "p", "", "包名称：默认目录名")
 }

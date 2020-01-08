@@ -83,27 +83,25 @@ func findHandlerRender(packageName string, objs []*ast.Object) (bool, *Render) {
 }
 
 // Scan 扫描
-func Scan(projectPath string) (*FileRender, error) {
+func Scan(projectPath, packageName string) (*FileRender, error) {
 	goFilePaths, err := filepathplus.Files(filepath.Join(projectPath, "internal", "biz", "handler"))
 	if err != nil {
 		return nil, err
 	}
 
-	projectName := filepath.Base(projectPath)
-
 	var imports = map[string]string{}
 	var handlers = []*Render{}
 
 	for _, goFilePath := range goFilePaths {
-		packageName, objs, err := astScan(goFilePath)
+		filePackageName, objs, err := astScan(goFilePath)
 		if err != nil {
 			return nil, err
 		}
 
-		ok, handlerRender := findHandlerRender(packageName, objs)
+		ok, handlerRender := findHandlerRender(filePackageName, objs)
 		if ok {
-			if _, ok := imports[packageName]; !ok {
-				imports[packageName] = fmt.Sprintf("%s/internal/biz/handler/%s", projectName, packageName)
+			if _, ok := imports[filePackageName]; !ok {
+				imports[filePackageName] = fmt.Sprintf("%s/internal/biz/handler/%s", packageName, filePackageName)
 			}
 			handlers = append(handlers, handlerRender)
 		}

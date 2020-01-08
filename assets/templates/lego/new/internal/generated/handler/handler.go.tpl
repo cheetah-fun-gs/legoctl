@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	handlercommon "{{.PackageName}}/internal/biz/handler/common"
+
 	legocore "github.com/cheetah-fun-gs/lego/pkg/core"
 )
 
