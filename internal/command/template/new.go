@@ -10,20 +10,15 @@ import (
 	"github.com/cheetah-fun-gs/legoctl/internal/common"
 )
 
-var (
-	templateReplaces = map[string][]*filepathplus.ReplaceOption{
-		"lego": []*filepathplus.ReplaceOption{
-			&filepathplus.ReplaceOption{
-				Old: `"github.com/cheetah-fun-gs/lego/internal`,
-				New: `"{{.PackageName}}/internal`,
-			},
-			&filepathplus.ReplaceOption{
-				Old: `"github.com/cheetah-fun-gs/lego/cmd"`,
-				New: `"{{.PackageName}}/cmd"`,
-			},
+func getTemplateReplaces(packageName string) []*filepathplus.ReplaceOption {
+	return []*filepathplus.ReplaceOption{
+		&filepathplus.ReplaceOption{
+			Old:      fmt.Sprintf(`"%s/(internal|cmd)`, packageName),
+			New:      `"{{.PackageName}}/$1`,
+			IsRegexp: true,
 		},
 	}
-)
+}
 
 func isSkipCopy(path, projectName string) bool {
 	// 跳过的文件
@@ -67,7 +62,7 @@ func New(projectPath string, opt *Opt) error {
 		}
 	}
 
-	if err := buildNew(projectPath, templateNewPath, opt.TemplateName, isSkipCopy); err != nil {
+	if err := buildNew(projectPath, templateNewPath, opt, isSkipCopy); err != nil {
 		return err
 	}
 
@@ -75,7 +70,7 @@ func New(projectPath string, opt *Opt) error {
 	return nil
 }
 
-func buildNew(srcDir, dstDir, templateName string, isSkipCopy func(path, projectPath string) bool) error {
+func buildNew(srcDir, dstDir string, opt *Opt, isSkipCopy func(path, projectPath string) bool) error {
 	files, err := filepathplus.Files(srcDir)
 	if err != nil {
 		return nil
@@ -99,7 +94,7 @@ func buildNew(srcDir, dstDir, templateName string, isSkipCopy func(path, project
 			}
 		}
 
-		if err := filepathplus.CopyFileAndReplace(srcPath, dstPath, templateReplaces[templateName]); err != nil {
+		if err := filepathplus.CopyFileAndReplace(srcPath, dstPath, getTemplateReplaces(opt.PackageName)); err != nil {
 			return err
 		}
 	}
