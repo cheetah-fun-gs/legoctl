@@ -1,4 +1,4 @@
-package scfgw
+package scf
 
 import (
 	"os"
@@ -15,7 +15,7 @@ var (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use: "lego",
+	Use: "{{.PackageName}}",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 0 && args[0] == "help" {
 			cmd.Help()

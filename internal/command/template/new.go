@@ -17,6 +17,14 @@ func getTemplateReplaces(packageName string) []*filepathplus.ReplaceOption {
 			New:      `"{{.PackageName}}/$1`,
 			IsRegexp: true,
 		},
+		&filepathplus.ReplaceOption{
+			Old: fmt.Sprintf(`"%s"`, packageName),
+			New: `"{{.PackageName}}"`,
+		},
+		&filepathplus.ReplaceOption{
+			Old: fmt.Sprintf(`"%s"`, filepath.Base(packageName)),
+			New: `"{{.PackageName}}"`,
+		},
 	}
 }
 

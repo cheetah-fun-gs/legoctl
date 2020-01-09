@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	_ "{{.PackageName}}/cmd/scfgw"
+	_ "{{.PackageName}}/cmd/scf"
 	"{{.PackageName}}/internal/common"
 	allhandler "{{.PackageName}}/internal/generated/handler"
 	svcscfgw "{{.PackageName}}/internal/svc/scfgw"
