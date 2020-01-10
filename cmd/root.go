@@ -25,7 +25,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "legoctl",
 	Short:   "lego项目管理工具",
-	Version: "1.0.3",
+	Version: "1.0.4",
 	Args:    cobra.MinimumNArgs(1),
 	// Uncomment the following line if your bare application
 	// has an action associated with it:

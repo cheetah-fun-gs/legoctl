@@ -58,11 +58,11 @@ func buildGen(data *handler.FileRender, templateGenPath, projectGenPath string) 
 
 		if strings.HasSuffix(dstFilePath, ".go") {
 			_, stdout, err := execplus.Command("gofmt", "-w", dstFilePath)
-			if err != nil {
-				return err
-			}
 			for _, line := range stdout {
 				fmt.Printf(line)
+			}
+			if err != nil {
+				return err
 			}
 		}
 	}

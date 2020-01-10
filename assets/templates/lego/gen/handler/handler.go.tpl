@@ -16,17 +16,17 @@ type {{ .PackageTitle }}{{ .HandlerName }}Handler struct {
 	SvcNames         []string
 	HTTPMethods      []string
 	HTTPPaths        []string
-	beforeInjectFunc []func(ctx context.Context, req *handler{{ .PackageName }}.{{ .HandlerName }}Req)
-	behindInjectFunc []func(ctx context.Context, req *handler{{ .PackageName }}.{{ .HandlerName }}Req, resp *handler{{ .PackageName }}.{{ .HandlerName }}Resp)
+	beforeInjectFunc []func(ctx context.Context, req handler{{ .PackageName }}.{{ .HandlerName }}Req)
+	behindInjectFunc []func(ctx context.Context, req handler{{ .PackageName }}.{{ .HandlerName }}Req, resp handler{{ .PackageName }}.{{ .HandlerName }}Resp)
 }
 
 // InjectBeforeFunc 注入前置函数
-func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) InjectBeforeFunc(f ...func(ctx context.Context, req *handler{{ .PackageName }}.{{ .HandlerName }}Req)) {
+func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) InjectBeforeFunc(f ...func(ctx context.Context, req handler{{ .PackageName }}.{{ .HandlerName }}Req)) {
 	h.beforeInjectFunc = append(h.beforeInjectFunc, f...)
 }
 
 // InjectBehindFunc 注入后置函数
-func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) InjectBehindFunc(f ...func(ctx context.Context, req *handler{{ .PackageName }}.{{ .HandlerName }}Req, resp *handler{{ .PackageName }}.{{ .HandlerName }}Resp)) {
+func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) InjectBehindFunc(f ...func(ctx context.Context, req handler{{ .PackageName }}.{{ .HandlerName }}Req, resp handler{{ .PackageName }}.{{ .HandlerName }}Resp)) {
 	h.behindInjectFunc = append(h.behindInjectFunc, f...)
 }
 
@@ -48,14 +48,36 @@ func (h *{{ .PackageTitle }}{{ .HandlerName }}Handler) Handle(ctx context.Contex
 		return fmt.Errorf("req or resp type error")
 	}
 
-	for _, f := range h.beforeInjectFunc {
-		go f(ctx, reqBody)
+	// 前置注入
+	if len(h.beforeInjectFunc) > 0 {
+		beforeInjectReq := handler{{ .PackageName }}.{{ .HandlerName }}Req{}
+		if err := jsonplus.Convert(reqBody, &beforeInjectReq); err != nil {
+			mlogger.Warnc(ctx, "jsonplus.Convert err: %v", err)
+		} else {
+			for _, f := range h.beforeInjectFunc {
+				go f(ctx, beforeInjectReq)
+			}
+		}
 	}
+
+	// 真正处理
 	if err := handler{{ .PackageName }}.{{ .HandlerName }}Handle(ctx, reqBody, respBody); err != nil {
 		return err
 	}
-	for _, f := range h.behindInjectFunc {
-		go f(ctx, reqBody, respBody)
+
+	// 后置注入
+	if len(h.behindInjectFunc) > 0 {
+		behindInjectReq := handler{{ .PackageName }}.{{ .HandlerName }}Req{}
+		behindInjectResp := handler{{ .PackageName }}.{{ .HandlerName }}Resp{}
+		errReq := jsonplus.Convert(reqBody, &behindInjectReq)
+		errResp := jsonplus.Convert(respBody, &behindInjectResp)
+		if errReq != nil || errResp != nil {
+			mlogger.Warnc(ctx, "jsonplus.Convert errReq: %v, errResp: %v", errReq, errResp)
+		} else {
+			for _, f := range h.behindInjectFunc {
+				go f(ctx, behindInjectReq, behindInjectResp)
+			}
+		}
 	}
 	return nil
 }

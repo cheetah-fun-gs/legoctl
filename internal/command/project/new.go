@@ -65,29 +65,30 @@ func buildNew(templateNewPath, projectPath string, opt *Opt) error {
 
 		if strings.HasSuffix(dstFilePath, ".go") {
 			_, stdout, err := execplus.Command("gofmt", "-w", dstFilePath)
-			if err != nil {
-				return err
-			}
 			for _, line := range stdout {
 				fmt.Printf(line)
+			}
+			if err != nil {
+				return err
 			}
 		}
 	}
 
 	os.Chdir(projectPath)
 	_, stdout, err := execplus.Command("go", "mod", "init", opt.PackageName)
-	if err != nil {
-		return err
-	}
 	for _, line := range stdout {
 		fmt.Printf(line)
 	}
+	if err != nil {
+		return err
+	}
+
 	_, stdout, err = execplus.Command("go", "mod", "vendor")
-	if err != nil {
-		return err
-	}
 	for _, line := range stdout {
 		fmt.Printf(line)
+	}
+	if err != nil {
+		return err
 	}
 	return nil
 }
