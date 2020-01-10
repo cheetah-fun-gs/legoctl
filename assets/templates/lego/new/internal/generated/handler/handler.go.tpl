@@ -1,4 +1,3 @@
-// Code generated  DO NOT EDIT.
 package handler
 
 import (
